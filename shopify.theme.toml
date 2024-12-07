@@ -1,0 +1,3 @@
+[environments]
+development.store = "siddham-mishra-test.myshopify.com"
+development.theme_id = "#173238452503"
