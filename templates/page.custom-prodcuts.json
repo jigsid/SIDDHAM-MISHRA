@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "banner",
+      "settings": {
+        "left_text": "TISSO VISON",
+        "middle_text": "Find the ideal gift for loved ones",
+        "right_text": "CHOOSE GIFT",
+        "banner_heading": "Welcome to Our Collection",
+        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
+        "custom_text_1": "The Gift Guide",
+        "custom_text_2": "Discover Joy: Your Ultimate Holiday Gift Destination.<br> Explore our curated selection and find the perfect gifts to <br>delight your loved ones this holiday season.",
+        "custom_text_3": "SHOP NOW"
+      }
+    },
+    "product-grid": {
+      "type": "product-grid",
+      "settings": {}
+    }
+  },
+  "order": ["banner", "product-grid"]
+}

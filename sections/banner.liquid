@@ -1,0 +1,389 @@
+<section class="custom-banner">
+    <div class="top-bar">
+      <div class="left-text">{{ section.settings.left_text }}</div>
+      <div class="middle-text">{{ section.settings.middle_text }}</div>
+      <div class="right-text">
+        <button class="choose-gift-button">
+          <span class="button-text">{{ section.settings.right_text }} <span class="arrow">→</span></span>
+        </button>
+      </div>
+    </div>
+  
+    <div class="middle-section">
+      <h1>{{ section.settings.banner_heading }}</h1>
+      <p>{{ section.settings.banner_subheading }}</p>
+  
+      <!-- 3 Customizable Texts Added Below -->
+      <div class="custom-texts">
+        <p class="custom-text">{{ section.settings.custom_text_1 }}</p>
+        <p class="custom-text">{{ section.settings.custom_text_2 }}</p>
+        <p class="custom-text3">{{ section.settings.custom_text_3 }} <span class="arrow">→</span></p>
+      </div>
+    </div>
+  
+    <div class="bottom-image">
+      <img src="{{ 'image1.png' | asset_url }}" alt="Bottom Image" />
+    </div>
+  
+    <div class="bottom-bar">
+      <p>{{ section.settings.bottom_bar_text }}</p>
+    </div>
+  </section>
+  
+  
+  
+  <style>
+    .custom-banner {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      position: relative;
+      background: #fff;
+    }
+  
+    /* Top Bar Styling */
+  
+  .top-bar {
+    background-color: #F5F5F5;
+    padding: 0 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .top-bar div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .left-text {
+    text-align: left;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding-left: 15px;
+  }
+  
+  .middle-text {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  
+  .right-text {
+    text-align: right;
+    padding-right: 15px;
+  }
+  
+  /* Button Styling for Top Bar */
+  .choose-gift-button {
+    position: relative;
+    background: #f7ff47;
+    color: #000;
+    border: none;
+    padding: 12px 18px;
+    font-weight: medium;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .choose-gift-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  
+  .choose-gift-button:hover::before {
+    transform: translateX(100%);
+  }
+  
+  .choose-gift-button:hover {
+    color: #fff;
+  }
+  
+  .button-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .arrow {
+    margin-left: 8px;
+  }
+  
+  /* Middle Section Styling */
+  .middle-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 0;
+    background: url('{{ "image.png" | asset_url }}') no-repeat center top;
+    background-size: 1200px 380px;
+    height: 380px;
+  }
+  
+  .middle-section h1,
+  .middle-section p {
+    margin: 10px 0;
+  }
+  
+  /* Custom Texts Styling */
+  .custom-texts {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .custom-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    margin: 5px 0;
+    word-break: break-word; /* Allow very long words to break */
+    text-align: center; /* Center the text */
+  }
+  
+  .custom-text:first-child {
+    font-family: 'Jost', sans-serif;
+    font-size: 60px; /* Larger font size */
+    font-weight: 600; /* Set font weight */
+    line-height: 70px; /* Line height */
+    color: #333; /* Darker color */
+    position: relative;
+    top: 370px; /* Move 20px up */
+    left: -380px; /* Move 50px left */
+  }
+  
+  .custom-text:nth-child(2) {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px; /* Slightly smaller than Text 1 */
+    font-weight: 300; /* Set font weight */
+    color: #444; /* Darker color */
+    position: relative;
+    top: 400px; /* Adjust this value to move it up */ 
+    left: -380px;  
+  }
+  
+  .custom-text3 {
+    background-color: #000; /* Default background is black */
+    color: #fff; /* Default text color is white */
+    border: none;
+    padding: 8px 40px;
+    font-weight: medium;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 10px;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    top: 420px;
+    left: -400px;
+    z-index: 0; /* Lower than pseudo-element for correct stacking */
+    width: auto; /* Ensure the width is properly calculated */
+  }
+  
+  .custom-text3::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%; /* Ensure the pseudo-element spans the full width */
+    height: 100%;
+    background: #f7ff47; /* Yellow background for hover effect */
+    transition: transform 0.3s ease;
+    z-index: -1; /* Ensure it's behind the button */
+  }
+  
+  .custom-text3:hover::before {
+    transform: translateX(100%); /* Slide yellow background in */
+  }
+  
+  .custom-text3:hover {
+    color: #000; /* Change text color to black */
+    background-color: transparent; /* Transparent background ensures visibility */
+  }
+  
+  .custom-text3 .text,
+  .custom-text3 .arrow {
+    position: relative;
+    z-index: 1; /* Ensure text and arrow are above pseudo-element */
+  }
+  
+  .custom-text3 .arrow {
+    margin-left: 8px;
+  }
+  
+  
+  
+  /* Bottom Image Styling */
+  .bottom-image {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    top: -10px;
+  }
+  
+  .bottom-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    position: relative;
+    left: 230px;
+  }
+  
+   /* Bottom Bar Styling */
+    .bottom-bar {
+      background-color: #F5F5F5;
+      padding: 0px;
+      width: 100%;
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .bottom-bar p {
+      font-size: 1.5rem;
+      color: #000;
+    }
+  
+   @media only screen and (max-width: 768px) {
+      .top-bar {
+        justify-content: center;
+        height: auto;
+        margin-bottom: 20px; /* Add margin-bottom to create space below the top bar */
+      }
+  
+      .top-bar .middle-text {
+        display: none;
+      }
+  
+      .top-bar .right-text {
+        display: none;
+      }
+  
+      .middle-section {
+        flex-direction: column;
+        justify-content: flex-start;
+        height: auto;
+  
+      }
+  
+      .custom-texts {
+        flex-direction: column;
+        margin-top: 300px;
+      }
+  
+      .custom-text:first-child {
+        position: static;
+        font-size: 30px; /* Adjust font size for mobile */
+        text-align: center;
+        margin-top: 60px;
+      }
+  
+      .custom-text:nth-child(2) {
+        position: static;
+        font-size: 15px; /* Adjust font size for mobile */
+        text-align: center;
+  
+      }
+  
+      .custom-text3 {
+      position: relative;
+      top: -520px; /* Move the element 20px up */
+      left: auto;
+      margin-top: 0px;
+      z-index: 2; /* Ensure the button is above the image */
+  }
+  
+      .bottom-image {
+        display: none; /* Remove image1 in mobile view */
+      }
+  
+      .bottom-bar {
+        width: 100%;
+        text-align: center;
+      }
+  }
+  
+  
+  </style>
+  
+  {% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "left_text",
+        "label": "Left Text",
+        "default": "Left Text"
+      },
+      {
+        "type": "text",
+        "id": "middle_text",
+        "label": "Middle Text",
+        "default": "Middle Text"
+      },
+      {
+        "type": "text",
+        "id": "right_text",
+        "label": "Right Text",
+        "default": "Go to Products"
+      },
+      {
+        "type": "text",
+        "id": "bottom_bar_text",
+        "label": "Bottom Bar Text",
+        "default": "Bottom Bar Content"
+      },
+      {
+        "type": "text",
+        "id": "custom_text_1",
+        "label": "Custom Text 1",
+        "default": "Custom Text One"
+      },
+      {
+        "type": "text",
+        "id": "custom_text_2",
+        "label": "Custom Text 2",
+        "default": "Custom Text Two"
+      },
+      {
+        "type": "text",
+        "id": "custom_text_3",
+        "label": "Custom Text 3",
+        "default": "Custom Text Three"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Background Image"
+      }
+    ]
+  }
+  {% endschema %}
+  

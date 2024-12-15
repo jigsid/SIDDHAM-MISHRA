@@ -1,0 +1,425 @@
+<br><br>
+<div class="headline">Tisso vision in the wild</div>
+
+<style>
+  .headline {
+    font-size: 30px; /* Increase size */
+    font-weight: bold; /* Make it bold */
+    margin: 10px; /* Add spacing around */
+  }
+
+  /* Product Grid */
+  .product-grid .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Popup Modal */
+  .popup-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .popup-content {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    width: 60%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+  }
+
+  .popup-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .popup-image {
+    flex: 1;
+    height: 200px;
+    border-radius: 8px;
+  }
+
+  .popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .popup-details {
+    flex: 2;
+    padding-left: 15px;
+  }
+
+  .popup-details h3 {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  #popupProductPrice {
+    font-family: 'Lustria', sans-serif;
+    font-weight: 400;
+    font-size: 20px; /* Increased font size for the price */
+    color: #333;
+    margin-top: 8px;
+  }
+
+  #popupProductDescription {
+    font-family: 'Jost', sans-serif;
+    font-weight: 210;
+    font-size: 15px; /* Keeps description size unchanged */
+    color: #333;
+  }
+
+  /* Lower Half - Color and Size Selection */
+  .popup-lower {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .popup-option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .color-buttons {
+    display: flex;
+    gap: 0;
+  }
+
+  .color-option {
+    flex: 1;
+    padding: 10px;
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .color-option.selected {
+    background-color: black;
+    color: white;
+  }
+
+  select,
+  button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  select {
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #555;
+  }
+
+  #addToCartButton {
+    background-color: black;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  #addToCartButton .arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  #addToCartButton:hover .arrow {
+    transform: translateX(5px);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+  }
+
+  .close-btn:hover {
+    color: #888;
+  }
+
+  /* Mobile View */
+  @media (max-width: 768px) {
+    .headline {
+      font-size: 20px; /* Reduce headline size */
+      text-align: center;
+    }
+
+    .product-grid .grid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+      gap: 10px;
+    }
+
+    .popup-content {
+      width: 90%; /* Fit popup to smaller screens */
+      padding: 10px; /* Adjust padding */
+    }
+
+    .popup-upper {
+      flex-direction: column; /* Stack image and details vertically */
+      gap: 10px;
+    }
+
+    .popup-image {
+      height: 150px; /* Adjust image height */
+    }
+
+    .popup-details h3 {
+      font-size: 16px; /* Adjust title font size */
+    }
+
+    #popupProductPrice {
+      font-size: 18px; /* Adjust price font size */
+    }
+
+    #popupProductDescription {
+      font-size: 14px; /* Adjust description font size */
+    }
+
+    .popup-lower {
+      gap: 10px; /* Adjust gaps */
+    }
+
+    .popup-option label {
+      font-size: 14px;
+    }
+
+    .color-option,
+    select,
+    button {
+      font-size: 13px; /* Adjust button and select sizes */
+    }
+  }
+</style>
+
+
+<!-- Product Grid Section -->
+<section class="product-grid">
+  <div class="grid">
+    {% for product in collections.all.products %}
+      {% if product.featured_image %}
+        <div class="product-card" data-product-handle="{{ product.handle }}">
+          <img 
+            src="{{ product.featured_image | img_url: 'medium' }}" 
+            alt="{{ product.featured_image.alt | escape }}" 
+            width="{{ product.featured_image.width }}" 
+            height="{{ product.featured_image.height }}" 
+            class="product-image">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.description | strip_html | truncate: 100 }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Popup Modal -->
+<div class="popup-modal" id="productPopup">
+  <div class="popup-content">
+    <span class="close-btn" id="closePopup">×</span>
+
+    <!-- Upper Half -->
+    <div class="popup-upper">
+      <div class="popup-image">
+        <img src="" alt="Product Image" id="popupImage" width="300" height="300">
+      </div>
+      <div class="popup-details">
+        <h3 id="popupProductName"></h3>
+        <p id="popupProductPrice"></p>
+        <p id="popupProductDescription"></p>
+      </div>
+    </div>
+
+    <!-- Lower Half -->
+    <div class="popup-lower">
+      <div class="popup-option">
+        <label for="colorSelect">Color:</label>
+        <div id="colorSelect" class="color-buttons">
+          <button type="button" class="color-option" data-color="Black">Black</button>
+          <button type="button" class="color-option" data-color="White">White</button>
+        </div>
+      </div>
+
+      <div class="popup-option">
+        <label for="sizeSelect">Size:</label>
+        <select id="sizeSelect" class="full-width">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+      </div>
+
+      <button id="addToCartButton">Add to Cart <span class="arrow">→</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const productCards = document.querySelectorAll('.product-card');
+  const popupModal = document.getElementById('productPopup');
+  const closePopup = document.getElementById('closePopup');
+  const addToCartButton = document.getElementById('addToCartButton');
+  const colorOptions = document.querySelectorAll('.color-option');
+  const sizeSelect = document.getElementById('sizeSelect');
+
+  let currentProduct = {};
+  let selectedColor = 'Black'; // Default color
+  let selectedSize = 'M'; // Default size
+
+  // Define the variant ID for "Soft Winter Jacket"
+  const softWinterJacketVariantId = 49922929230103; // Size: M, Color: Black
+
+  // Automatically select default options
+  const selectDefaultOptions = () => {
+    colorOptions.forEach(option => {
+      if (option.getAttribute('data-color') === 'Black') {
+        option.classList.add('selected');
+      } else {
+        option.classList.remove('selected');
+      }
+    });
+    sizeSelect.value = 'M';
+    selectedColor = 'Black';
+    selectedSize = 'M';
+  };
+
+  // Handle product card click to show the popup
+  productCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const productHandle = card.getAttribute('data-product-handle');
+
+      fetch(`/products/${productHandle}.js`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error fetching product: ${productHandle}`);
+          }
+          return response.json();
+        })
+        .then(product => {
+          const { title, description, price, featured_image, variants } = product;
+
+          document.getElementById('popupProductName').textContent = title;
+          document.getElementById('popupProductPrice').textContent = `£${(price / 100).toFixed(2)}`;
+          document.getElementById('popupProductDescription').textContent = description.replace(/<\/?[^>]+(>|$)/g, '');
+          document.getElementById('popupImage').src = featured_image;
+
+          currentProduct = { handle: productHandle, variants };
+
+          selectDefaultOptions(); // Reset to default options
+          popupModal.style.display = 'flex';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  });
+
+  // Close popup
+  closePopup.addEventListener('click', () => {
+    popupModal.style.display = 'none';
+  });
+
+  // Handle color selection
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      colorOptions.forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+      selectedColor = option.getAttribute('data-color');
+    });
+  });
+
+  // Handle Add to Cart
+  addToCartButton.addEventListener('click', () => {
+    const selectedVariant = currentProduct.variants.find(variant => {
+      return variant.options[0] === selectedSize && variant.options[1] === selectedColor;
+    });
+
+    if (!selectedVariant) {
+      alert('Selected variant is not available. Please choose valid options.');
+      return;
+    }
+
+    // Add both products to the cart
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: [
+          { quantity: 1, id: selectedVariant.id },
+          { quantity: 1, id: softWinterJacketVariantId },
+        ],
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error adding to cart.');
+        }
+        return response.json();
+      })
+      .then(() => {
+        window.location.href = '/cart';
+      })
+      .catch(error => {
+        console.error('Error adding to cart:', error);
+        alert('An error occurred while adding products to the cart.');
+      });
+
+    popupModal.style.display = 'none';
+  });
+
+  // Close popup when clicking outside
+  window.addEventListener('click', (event) => {
+    if (event.target === popupModal) {
+      popupModal.style.display = 'none';
+    }
+  });
+</script>
